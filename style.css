@@ -4,10 +4,23 @@
     box-sizing:border-box;
 }
 
-body{
-    background:#000;
+html, body{
+    width:100%;
+    height:100%;
     overflow:hidden;
+    background:black;
     font-family:Arial, Helvetica, sans-serif;
+}
+
+/* =========================
+   COMMON SCENES
+========================= */
+
+.scene1, #scene2, #scene3{
+    position:fixed;
+    inset:0;
+    width:100%;
+    height:100%;
 }
 
 /* =========================
@@ -15,56 +28,55 @@ body{
 ========================= */
 
 .scene1{
-    width:100vw;
-    height:100vh;
     display:flex;
     flex-direction:column;
     justify-content:center;
     align-items:center;
-    background:black;
+    text-align:center;
+    padding:20px;
 }
 
 .name{
-    font-size:80px;
+    font-size:clamp(24px,6vw,70px);
     font-weight:900;
-    text-align:center;
-    background:linear-gradient(90deg,#8a6a00,#ffd700,#fff4b0,#ffd700,#8a6a00);
-    -webkit-background-clip:text;
-    color:transparent;
+    color:gold;
     position:relative;
+    max-width:95vw;
+    overflow:hidden;
 }
 
+/* shine effect */
 .name::after{
     content:"";
     position:absolute;
     top:0;
-    left:-150%;
-    width:100%;
+    left:-120%;
+    width:120%;
     height:100%;
-    background:linear-gradient(90deg,transparent,rgba(255,255,255,0.8),transparent);
-    animation:shine 3s linear infinite;
+    background:linear-gradient(90deg,transparent,rgba(255,255,255,0.6),transparent);
+    animation:shine 3s infinite;
 }
 
 @keyframes shine{
-    from{left:-150%;}
-    to{left:150%;}
+    0%{left:-120%;}
+    100%{left:120%;}
 }
 
-/* LOADING */
+/* loader */
 .loader-container{
-    width:500px;
-    margin-top:40px;
+    width:90%;
+    max-width:400px;
+    margin-top:20px;
 }
 
 #loadingText{
     color:white;
-    text-align:center;
-    margin-bottom:15px;
+    font-size:14px;
+    margin-bottom:10px;
 }
 
 .loading-bar{
-    width:100%;
-    height:12px;
+    height:10px;
     background:#222;
     border-radius:20px;
     overflow:hidden;
@@ -76,34 +88,14 @@ body{
     background:gold;
 }
 
-/* START BUTTON */
-#startSection{
-    margin-top:40px;
-    text-align:center;
-}
-
+/* button */
 #startBtn{
-    background:transparent;
+    margin-top:20px;
+    padding:12px 25px;
     border:2px solid gold;
+    background:transparent;
     color:gold;
-    font-size:28px;
-    padding:18px 45px;
-    cursor:pointer;
-    letter-spacing:3px;
-    transition:0.3s;
-}
-
-#startBtn:hover{
-    background:gold;
-    color:black;
-}
-
-/* =========================
-   SCENES COMMON
-========================= */
-
-.hidden{
-    display:none !important;
+    font-size:16px;
 }
 
 /* =========================
@@ -111,24 +103,17 @@ body{
 ========================= */
 
 #scene2{
-    position:fixed;
-    top:0;
-    left:0;
-    width:100vw;
-    height:100vh;
-    background:black;
     display:flex;
     justify-content:center;
     align-items:center;
+    background:black;
 }
 
 #ageCounter{
-    color:#d4af37;
-    font-size:220px;
-    font-weight:900;
-    opacity:0;
-    transition:0.3s;
+    color:gold;
+    font-size:clamp(70px,18vw,180px);
     text-align:center;
+    font-weight:900;
 }
 
 /* =========================
@@ -136,33 +121,31 @@ body{
 ========================= */
 
 #scene3{
-    position:fixed;
-    top:0;
-    left:0;
-    width:100vw;
-    height:100vh;
+    display:block;
 }
 
-/* background slideshow */
+/* background images */
 #photoBg{
     position:absolute;
-    width:100%;
-    height:100%;
-    background-size:cover;
+    inset:0;
+
+    background-size:contain;
+    background-repeat:no-repeat;
     background-position:center;
-    transition:2s;
+
+    background-color:black;
 }
 
+/* dark overlay */
 #photoBg::after{
     content:"";
     position:absolute;
-    width:100%;
-    height:100%;
-    background:rgba(0,0,0,0.65);
+    inset:0;
+    background:rgba(0,0,0,0.55);
 }
 
 /* =========================
-   LETTER BOX (FIXED SCROLL)
+   LETTER BOX (MOBILE SAFE)
 ========================= */
 
 #letterBox{
@@ -170,39 +153,36 @@ body{
     top:50%;
     left:50%;
     transform:translate(-50%,-50%);
-    width:85%;
-    max-width:900px;
-    height:60vh;              /* IMPORTANT */
-    overflow-y:auto;         /* ENABLE SCROLL */
-    padding:25px;
+
+    width:92vw;
+    max-width:650px;
+    height:65vh;
+
+    overflow-y:auto;
+
+    padding:15px;
 
     color:white;
-    font-size:26px;
-    line-height:1.8;
-    z-index:10;
+    font-size:clamp(16px,4vw,20px);
+    line-height:1.6;
 
-    -webkit-overflow-scrolling: touch;
-
-    background:rgba(0,0,0,0.25);
-    border:1px solid rgba(255,215,0,0.2);
+    background:rgba(0,0,0,0.45);
     border-radius:12px;
+
+    max-height:calc(100vh - 120px);
 }
 
-/* clean spacing */
+/* text */
 #typedText{
     white-space:pre-wrap;
 }
 
-/* scrollbar styling */
+/* scrollbar */
 #letterBox::-webkit-scrollbar{
-    width:6px;
+    width:4px;
 }
 
 #letterBox::-webkit-scrollbar-thumb{
     background:gold;
     border-radius:10px;
-}
-
-#letterBox::-webkit-scrollbar-track{
-    background:transparent;
 }
