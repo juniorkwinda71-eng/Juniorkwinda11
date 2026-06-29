@@ -4,19 +4,48 @@
     box-sizing:border-box;
 }
 
+/* =========================
+   FORCE SCREEN FIT SYSTEM
+========================= */
+
 html, body{
     width:100%;
     height:100%;
     overflow:hidden;
     background:black;
     font-family:Arial, Helvetica, sans-serif;
+}
 
-    /* 🔥 GLOBAL PHONE SCALE FIX */
-    font-size:clamp(12px, 1.6vw, 18px);
+/* 🔥 GLOBAL SCALE DOWN ON SMALL SCREENS */
+@media (max-width: 768px){
+    body{
+        transform: scale(0.85);
+        transform-origin: top left;
+        width:117%;
+        height:117%;
+    }
+}
+
+@media (max-width: 480px){
+    body{
+        transform: scale(0.75);
+        transform-origin: top left;
+        width:133%;
+        height:133%;
+    }
+}
+
+@media (max-width: 360px){
+    body{
+        transform: scale(0.65);
+        transform-origin: top left;
+        width:154%;
+        height:154%;
+    }
 }
 
 /* =========================
-   GLOBAL WRAPPER FIX
+   SCENES
 ========================= */
 
 .scene1, #scene2, #scene3{
@@ -36,17 +65,13 @@ html, body{
     justify-content:center;
     align-items:center;
     text-align:center;
-
-    padding:5vw;
 }
 
 .name{
-    font-size:clamp(20px,6vw,60px);
+    font-size:60px;
     font-weight:900;
     color:gold;
     position:relative;
-    max-width:95%;
-    text-align:center;
 }
 
 /* shine */
@@ -68,19 +93,17 @@ html, body{
 
 /* loader */
 .loader-container{
-    width:85%;
-    max-width:350px;
+    width:400px;
     margin-top:20px;
 }
 
 #loadingText{
     color:white;
-    font-size:clamp(10px,2.5vw,14px);
-    margin-bottom:10px;
+    font-size:14px;
 }
 
 .loading-bar{
-    height:8px;
+    height:10px;
     background:#222;
     border-radius:20px;
     overflow:hidden;
@@ -95,11 +118,10 @@ html, body{
 /* button */
 #startBtn{
     margin-top:20px;
-    padding:10px 20px;
+    padding:12px 25px;
     border:2px solid gold;
     background:transparent;
     color:gold;
-    font-size:clamp(12px,3vw,16px);
 }
 
 /* =========================
@@ -115,7 +137,7 @@ html, body{
 
 #ageCounter{
     color:gold;
-    font-size:clamp(60px,18vw,160px);
+    font-size:180px;
     font-weight:900;
 }
 
@@ -123,11 +145,6 @@ html, body{
    SCENE 3
 ========================= */
 
-#scene3{
-    display:block;
-}
-
-/* background */
 #photoBg{
     position:absolute;
     inset:0;
@@ -137,7 +154,6 @@ html, body{
     background-color:black;
 }
 
-/* dark overlay */
 #photoBg::after{
     content:"";
     position:absolute;
@@ -145,41 +161,23 @@ html, body{
     background:rgba(0,0,0,0.55);
 }
 
-/* =========================
-   LETTER BOX (AUTO FIT)
-========================= */
-
+/* LETTER BOX */
 #letterBox{
     position:absolute;
     top:50%;
     left:50%;
     transform:translate(-50%,-50%);
-
-    width:90vw;
+    width:600px;
     height:60vh;
-
     overflow-y:auto;
-
-    padding:12px;
-
+    padding:15px;
     color:white;
-    font-size:clamp(14px,3.5vw,18px);
-    line-height:1.5;
-
+    font-size:18px;
+    line-height:1.6;
     background:rgba(0,0,0,0.45);
-    border-radius:10px;
+    border-radius:12px;
 }
 
 #typedText{
     white-space:pre-wrap;
-}
-
-/* scrollbar */
-#letterBox::-webkit-scrollbar{
-    width:4px;
-}
-
-#letterBox::-webkit-scrollbar-thumb{
-    background:gold;
-    border-radius:10px;
 }
