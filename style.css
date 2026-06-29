@@ -209,4 +209,59 @@ body{
 
 #letterBox::-webkit-scrollbar-track{
     background:transparent;
+    /* =========================
+   RESPONSIVE SCALING SYSTEM
+========================= */
+
+@media (max-width: 768px) {
+
+    .name{
+        font-size:42px;
+        padding:0 10px;
+    }
+
+    .loader-container{
+        width:85%;
+    }
+
+    #startBtn{
+        font-size:20px;
+        padding:14px 30px;
+    }
+
+    #ageCounter{
+        font-size:140px;
+    }
+
+    #letterBox{
+        width:92%;
+        height:65vh;
+        font-size:18px;
+        padding:18px;
+    }
+}
+
+@media (max-width: 480px) {
+
+    .name{
+        font-size:32px;
+    }
+
+    #ageCounter{
+        font-size:100px;
+    }
+
+    #loadingText{
+        font-size:14px;
+    }
+
+    #startBtn{
+        font-size:18px;
+        padding:12px 25px;
+    }
+
+    #letterBox{
+        font-size:16px;
+        height:70vh;
+    }
 }
