@@ -170,24 +170,25 @@ function startScene3(){
         "Images/photo6.jpg",
         "Images/photo7.jpg"
     ];
+    photos.forEach(src => {
+    const img = new Image();
+    img.src = src;
+});
 
     let photoIndex = 0;
 
+bg.style.backgroundImage =
+    `url('${photos[0]}')`;
+
+setInterval(() => {
+
+    photoIndex =
+        (photoIndex + 1) % photos.length;
+
     bg.style.backgroundImage =
-        `url('${photos[0]}')`;
+        `url('${photos[photoIndex]}')`;
 
-    setInterval(() => {
-
-        photoIndex++;
-
-        if(photoIndex >= photos.length){
-            photoIndex = 0;
-        }
-
-        bg.style.backgroundImage =
-            `url('${photos[photoIndex]}')`;
-
-    }, 5000);
+}, 5000);
 
     const lines = [
 
