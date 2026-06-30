@@ -152,29 +152,23 @@ function startScene2(){
 
 function startScene3(){
 
-    document.getElementById("scene2")
-        .style.display = "none";
+    document.getElementById("scene2").style.display = "none";
 
-    document.getElementById("scene3")
-        .classList.remove("hidden");
+    const scene3 = document.getElementById("scene3");
+    scene3.classList.remove("hidden");
 
-    const bg =
-        document.getElementById("photoBg");
-
-    const box =
-        document.getElementById("letterBox");
-
-    const typed =
-        document.getElementById("typedText");
+    const bg = document.getElementById("photoBg");
+    const box = document.getElementById("letterBox");
+    const typed = document.getElementById("typedText");
 
     const photos = [
-        "images/photo1.jpg",
-        "images/photo2.jpg",
-        "images/photo3.jpg",
-        "images/photo4.jpg",
-        "images/photo5.jpg",
-        "images/photo6.jpg",
-        "images/photo7.jpg"
+        "Images/photo1.jpg",
+        "Images/photo2.jpg",
+        "Images/photo3.jpg",
+        "Images/photo4.jpg",
+        "Images/photo5.jpg",
+        "Images/photo6.jpg",
+        "Images/photo7.jpg"
     ];
 
     let photoIndex = 0;
@@ -193,7 +187,7 @@ function startScene3(){
         bg.style.backgroundImage =
             `url('${photos[photoIndex]}')`;
 
-    },5000);
+    }, 5000);
 
     const lines = [
 
@@ -207,7 +201,9 @@ function startScene3(){
 
         "Your kindness and sacrifices have shaped our lives ✨",
 
-        "We appreciate everything you do for us 💙",
+        "Every memory we share is a treasure that will stay with us forever 💙",
+
+        "Today we celebrate you, your journey and your beautiful heart ❤️",
 
         "Happy Birthday Mom 🎂🎁🎉",
 
@@ -224,36 +220,51 @@ function startScene3(){
 
         const line = lines[lineIndex];
 
-        speechSynthesis.speak(
-            new SpeechSynthesisUtterance(
-                line.replace(/[^\w\s]/g,"")
-            )
-        );
+        const speechText =
+            line.replace(/[^\w\s]/g,"");
+
+        const utter =
+            new SpeechSynthesisUtterance(speechText);
+
+        utter.rate = 0.9;
+        utter.pitch = 1;
 
         let charIndex = 0;
 
+        speechSynthesis.speak(utter);
+
         const typing = setInterval(() => {
 
-            typed.innerHTML +=
-                line.charAt(charIndex);
+            if(charIndex < line.length){
 
-            charIndex++;
+                typed.innerHTML +=
+                    line.charAt(charIndex);
 
-            box.scrollTop =
-                box.scrollHeight;
+                charIndex++;
 
-            if(charIndex >= line.length){
+                box.scrollTop =
+                    box.scrollHeight;
 
-                clearInterval(typing);
-
-                typed.innerHTML += "<br><br>";
-
-                lineIndex++;
-
-                setTimeout(writeNext,800);
             }
 
-        },25);
+        }, 35);
+
+        utter.onend = () => {
+
+            clearInterval(typing);
+
+            typed.innerHTML += "<br><br>";
+
+            lineIndex++;
+
+            setTimeout(() => {
+
+                writeNext();
+
+            }, 300);
+
+        };
+
     }
 
     writeNext();
