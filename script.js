@@ -1,67 +1,47 @@
 const progress = document.getElementById("progress");
 const loadingText = document.getElementById("loadingText");
 const startSection = document.getElementById("startSection");
+const startBtn = document.getElementById("startBtn");
+
+/* ================= LOADING ================= */
 
 let width = 0;
 
-const messages = [
-"Analyzing memories...",
-"Collecting moments...",
-"Reviewing 31 years...",
-"Calculating love received...",
-"Preparing celebration...",
-"Result: Infinite Love"
+const loadingSteps = [
+{ percent: 20, text: "Analyzing memories..." },
+{ percent: 40, text: "Collecting moments..." },
+{ percent: 60, text: "Reviewing 31 years..." },
+{ percent: 80, text: "Calculating love..." },
+{ percent: 100, text: "ACCESS GRANTED" }
 ];
-
-let m = 0;
-
-/* ================= LOADING ================= */
 
 const loadingInterval = setInterval(() => {
 
 ```
-width += 2;
+width++;
 
 progress.style.width = width + "%";
 
-if(width % 20 === 0 && m < messages.length){
-    loadingText.innerText = messages[m];
-    m++;
-}
+loadingSteps.forEach(step => {
+    if(width === step.percent){
+        loadingText.innerText = step.text;
+    }
+});
 
 if(width >= 100){
 
     clearInterval(loadingInterval);
 
-    progress.style.width = "100%";
+    setTimeout(() => {
+        startSection.classList.remove("hidden");
+    }, 500);
 
-    loadingText.innerText = "ACCESS GRANTED";
-
-    startSection.classList.remove("hidden");
 }
 ```
 
-}, 60);
+}, 50);
 
-/* ================= START ================= */
-
-document.getElementById("startBtn").onclick = () => {
-
-```
-startSection.style.display = "none";
-
-speakLines([
-    "Welcome Mom.",
-    "This is not just a birthday card.",
-    "This is a journey through your life.",
-    "Today we celebrate thirty one years of love.",
-    "Let us travel through time."
-], startScene2);
-```
-
-};
-
-/* ================= VOICE ================= */
+/* ================= SPEECH ================= */
 
 function speakLines(lines, callback){
 
@@ -83,15 +63,14 @@ function next(){
 
     const utter = new SpeechSynthesisUtterance(lines[index]);
 
-    utter.rate = 0.88;
+    utter.rate = 0.9;
     utter.pitch = 1;
-    utter.volume = 1;
 
     utter.onend = () => {
 
         index++;
 
-        setTimeout(next, 500);
+        setTimeout(next, 400);
 
     };
 
@@ -99,7 +78,7 @@ function next(){
 
         index++;
 
-        setTimeout(next, 500);
+        setTimeout(next, 400);
 
     };
 
@@ -110,6 +89,23 @@ next();
 ```
 
 }
+
+/* ================= START BUTTON ================= */
+
+startBtn.addEventListener("click", () => {
+
+```
+startSection.style.display = "none";
+
+speakLines([
+    "Welcome Mom.",
+    "This is not just a birthday card.",
+    "Today we celebrate your journey.",
+    "Let us travel through time."
+], startScene2);
+```
+
+});
 
 /* ================= SCENE 2 ================= */
 
@@ -128,7 +124,7 @@ const counter = document.getElementById("ageCounter");
 
 counter.innerText = age;
 
-const interval = setInterval(() => {
+const ageInterval = setInterval(() => {
 
     age++;
 
@@ -136,27 +132,20 @@ const interval = setInterval(() => {
 
     if(age >= 31){
 
-        clearInterval(interval);
+        clearInterval(ageInterval);
 
-        setTimeout(() => {
+        counter.innerHTML = `
+            <div>31</div>
+            <div style="font-size:40px;margin-top:10px;">
+                HAPPY BIRTHDAY 🎉
+            </div>
+        `;
 
-            counter.innerHTML = `
-                <div>31</div>
-                <div style="font-size:40px;margin-top:10px;">
-                    HAPPY BIRTHDAY 🎉
-                </div>
-            `;
+        speechSynthesis.speak(
+            new SpeechSynthesisUtterance("Happy Birthday Mom")
+        );
 
-            const happy = new SpeechSynthesisUtterance(
-                "Happy Birthday Mom."
-            );
-
-            speechSynthesis.speak(happy);
-
-            setTimeout(startScene3, 3000);
-
-        }, 1000);
-
+        setTimeout(startScene3, 3000);
     }
 
 }, 300);
@@ -172,13 +161,10 @@ function startScene3(){
 document.getElementById("scene2").style.display = "none";
 
 const scene3 = document.getElementById("scene3");
-
 scene3.classList.remove("hidden");
 
 const bg = document.getElementById("photoBg");
-
 const box = document.getElementById("letterBox");
-
 const text = document.getElementById("typedText");
 
 const photos = [
@@ -191,115 +177,75 @@ const photos = [
     "images/photo7.jpg"
 ];
 
-let currentPhoto = 0;
+let photoIndex = 0;
 
 bg.style.backgroundImage = `url('${photos[0]}')`;
 
 setInterval(() => {
 
-    currentPhoto++;
+    photoIndex++;
 
-    if(currentPhoto >= photos.length){
-        currentPhoto = 0;
+    if(photoIndex >= photos.length){
+        photoIndex = 0;
     }
 
     bg.style.backgroundImage =
-        `url('${photos[currentPhoto]}')`;
+        `url('${photos[photoIndex]}')`;
 
 }, 5000);
 
-const script = [
-
-    {
-        text:"Dear Mom ❤️",
-        speak:"Dear Mom"
-    },
-
-    {
-        text:"Today we celebrate your life and everything you have done for us 🎉💛",
-        speak:"Today we celebrate your life and everything you have done for us."
-    },
-
-    {
-        text:"You are the heart of this family ❤️",
-        speak:"You are the heart of this family."
-    },
-
-    {
-        text:"You gave us strength when we needed it most 💪",
-        speak:"You gave us strength when we needed it most."
-    },
-
-    {
-        text:"Your kindness, sacrifice and love built the family we have today 💛",
-        speak:"Your kindness, sacrifice and love built the family we have today."
-    },
-
-    {
-        text:"Every memory we share is a treasure that will stay with us forever ✨",
-        speak:"Every memory we share is a treasure that will stay with us forever."
-    },
-
-    {
-        text:"Today we celebrate you, your journey and your beautiful heart ❤️",
-        speak:"Today we celebrate you, your journey and your beautiful heart."
-    },
-
-    {
-        text:"Happy Birthday Mom 🎂🎉🎁",
-        speak:"Happy Birthday Mom."
-    },
-
-    {
-        text:"From your son, Junior 💙",
-        speak:"From your son Junior."
-    }
-
+const message = [
+    "Dear Mom ❤️",
+    "Today we celebrate your life and everything you have done for us 🎉",
+    "You are the heart of this family ❤️",
+    "Your love has guided us through every challenge 💛",
+    "Your kindness, strength and sacrifices will never be forgotten ✨",
+    "We love you more than words can describe 💙",
+    "Happy Birthday Mom 🎂🎉",
+    "From your son, Junior 💙"
 ];
 
-let s = 0;
+let lineIndex = 0;
 
-function showNextLine(){
+function writeNextLine(){
 
-    if(s >= script.length){
+    if(lineIndex >= message.length){
         return;
     }
 
-    const line = script[s];
+    const line = message[lineIndex];
+
+    speechSynthesis.speak(
+        new SpeechSynthesisUtterance(
+            line.replace(/[^\w\s]/g, "")
+        )
+    );
 
     let charIndex = 0;
 
-    const utter = new SpeechSynthesisUtterance(
-        line.speak
-    );
-
-    utter.rate = 0.88;
-
-    speechSynthesis.speak(utter);
-
     const typing = setInterval(() => {
 
-        text.innerHTML += line.text.charAt(charIndex);
+        text.innerHTML += line.charAt(charIndex);
 
         charIndex++;
 
         box.scrollTop = box.scrollHeight;
 
-        if(charIndex >= line.text.length){
+        if(charIndex >= line.length){
 
             clearInterval(typing);
 
             text.innerHTML += "<br><br>";
 
-            s++;
+            lineIndex++;
 
-            setTimeout(showNextLine, 1200);
+            setTimeout(writeNextLine, 800);
         }
 
     }, 25);
 }
 
-showNextLine();
+writeNextLine();
 ```
 
 }
